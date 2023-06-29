@@ -8,4 +8,5 @@ dump.rdb
 .classpath
 .project
 bin
-
+node_modules
+target

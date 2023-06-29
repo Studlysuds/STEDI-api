@@ -3,28 +3,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stedi-prod
+  name: prod-stedi-micah
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stedi-prod
+      app: prod-stedi-micah
   template:
     metadata:
       labels:
-        app: stedi-prod
+        app: prod-stedi-micah
     spec:
       containers:
-        - name: stedi-prod
-          image: gcr.io/cubs-consulting/stedi
+        - name: prod-stedi-micah
+          image: gcr.io/cubs-consulting/stedi #THIS IMAGE NEEDS TO REFER TO THE NEW ARTIFACT REGISTRY REPOSITORY
           env:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis-secrets-prod
+                  name: redis-secrets-micah
                   key: REDIS_PASS
             - name: REDIS_HOST
-              value: "redis-stedi-prod"
+              value: "redis-stedi-micah"
             - name: REDIS_PORT
               value: "6379"
             - name: REDIS_DB
@@ -50,23 +50,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: stedi-prod-service
+  name: prod-stedi-micah-nodeport
 spec:
   selector:
-    app: stedi-prod
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 4567
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: stedi-prod-nodeport
-spec:
-  selector:
-    app: stedi-prod
+    app: prod-stedi-micah
   type: NodePort
   ports:
     - port: 80
@@ -75,10 +62,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: stedi-prod-ingress
+  name: prod-stedi-micah-ingress
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: stedi-prod-public
-    networking.gke.io/managed-certificates: stedi-prod-certificate
+    kubernetes.io/ingress.global-static-ip-name: prod-stedi-micah-public #This IP has not been creted yet - need to create first
+    networking.gke.io/managed-certificates: prod-stedi-micah-certificate
     # kubernetes.io/ingress.allow-http: "false"
 spec:
   rules:
@@ -88,15 +75,15 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: stedi-prod-nodeport
+            name: prod-stedi-micah-nodeport # THIS MUST MATCH line 53
             port:
               number: 80
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: stedi-prod-certificate
+  name: prod-stedi-micah-certificate # This must match line 68
 spec:
   domains:
-    - stedi.me
+    - micah.cit262.com # This is a DNS record that has not been created yet - we need to create that first
     
