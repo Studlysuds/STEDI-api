@@ -53,7 +53,7 @@ jobs:
     - name: Build
       run: |-
         docker build \
-          --tag "us-docker.pkg.dev/my-devops-team/micah-api/api-tests:latest" \
+          --tag "us-docker.pkg.dev/unstable-unicorns-389016/micah-api/api-tests:latest" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
@@ -61,7 +61,7 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "us-docker.pkg.dev/my-devops-team/micah-api/api-tests:latest"
+        docker push "us-docker.pkg.dev/unstable-unicorns-389016/micah-api/api-tests:latest"
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
