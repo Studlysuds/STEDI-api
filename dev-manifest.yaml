@@ -31,7 +31,7 @@ spec:
 # The name of the container is specified below      
         - name: dev-stedi-micah
 # The image is a prebuilt file containing the operating system        
-          image: gcr.io/cubs-consulting/stedi:latest #IMAGE NEEDS TO BE ARTIFACT REGISTRY NEW REPOSITORY
+          image: us-docker.pkg.dev/unstable-unicorns-389016/micah-api/stedi-api:latest # IMAGE NEEDS TO BE ARTIFACT REGISTRY NEW REPOSITORY
           env:
             - name: REDIS_PASSWORD
               valueFrom:
