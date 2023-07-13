@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prod-stedi-micah
-          image: gcr.io/cubs-consulting/stedi #THIS IMAGE NEEDS TO REFER TO THE NEW ARTIFACT REGISTRY REPOSITORY
+          image: us-docker.pkg.dev/unstable-unicorns-389016/micah-api/stedi-api:latest #THIS IMAGE NEEDS TO REFER TO THE NEW ARTIFACT REGISTRY REPOSITORY
           env:
             - name: REDIS_PASSWORD
               valueFrom:
